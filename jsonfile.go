@@ -36,7 +36,7 @@ func New[Data any](path string) (*JSONFile[Data], error) {
 // Load loads an existing JSONFileData from the given path.
 //
 // If the file does not exist, Load returns an error that can be
-// checked with os.IsNotExist.
+// checked with errors.Is(err, fs.ErrNotExist).
 //
 // Load and New are separate to avoid creating a new file when
 // starting a service, which could lead to data loss. To both load an
@@ -44,7 +44,7 @@ func New[Data any](path string) (*JSONFile[Data], error) {
 // environment), combine Load with New, like this:
 //
 //	db, err := jsonfile.Load[Data](path)
-//	if os.IsNotExist(err) {
+//	if errors.Is(err, fs.ErrNotExist) {
 //		db, err = jsonfile.New[Data](path)
 //	}
 func Load[Data any](path string) (*JSONFile[Data], error) {
